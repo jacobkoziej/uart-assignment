@@ -32,10 +32,11 @@ int conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 {
 	uint32_t cur_time = millis();
 
+	// delay complete
 	if (cur_time - *start_time >= delay_time) {
 		*start_time = cur_time;
-		return 1;  // delay complete
-	} else {
-		return 0;  // delay incomplete
+		return 1;
 	}
+
+	return 0;
 }
