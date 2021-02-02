@@ -40,3 +40,13 @@ int conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 
 	return 0;
 }
+
+/* send up to an 8-byte packet */
+void send_packet(void *data, uint8_t siz, uint8_t sent_bytes)
+{
+	uint8_t *tracer = (uint8_t*) data;
+
+	// only send unsent bytes
+	for (uint8_t i = 0; i < siz && i < 8; i++)
+		if (!(sent_bytes & _BV(i))) Serial.write(tracer[i]);
+}
