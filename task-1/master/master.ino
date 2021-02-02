@@ -17,6 +17,13 @@
  */
 
 
+typedef struct {
+	void *data;
+	size_t siz;
+	uint32_t sent;
+} data_t;
+
+
 void setup()
 {
 	Serial.begin(9600);
