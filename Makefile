@@ -1,13 +1,13 @@
 PORT ?=
-TASK1 = ./task-1/master
+SKETCH ?=
 
 all:
-	arduino-cli compile --fqbn arduino:avr:uno $(TASK1)
+	arduino-cli compile --fqbn arduino:avr:uno $(SKETCH)
 
 clean:
-	rm -vrf $(TASK1)/build
+	rm -vrf $(SKETCH)/build
 
 flash: all
-	arduino-cli upload --verify --port $(PORT) --fqbn arduino:avr:uno $(TASK1)
+	arduino-cli upload --verify --port $(PORT) --fqbn arduino:avr:uno $(SKETCH)
 
 .PHONY: clean flash
