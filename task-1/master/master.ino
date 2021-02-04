@@ -62,3 +62,22 @@ void send_packet(uint8_t *tracer, size_t siz, uint32_t sent)
 		++i;
 	}
 }
+
+/* return a mask with bytes that should be confirmed */
+uint32_t confirm_mask(size_t siz)
+{
+	if (siz == 0) return siz;
+
+	int32_t val, mask;
+	val = mask = _BV(31);
+
+	// perform a sign extension
+	val >>= 31;
+	// don't return zero for multiples of 32
+	if (siz % 32 == 0) return (uint32_t) val;
+	// get the appropriate mask
+	mask >>= 31 - siz;
+
+	// mask off the unused bits
+	return (uint32_t) (val ^ mask);
+}
