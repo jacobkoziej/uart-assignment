@@ -17,6 +17,25 @@
  */
 
 
+#include <LiquidCrystal.h>
+
+
+#define LCD_RS     4
+#define LCD_ENABLE 5
+#define LCD_D4     6
+#define LCD_D5     7
+#define LCD_D6     8
+#define LCD_D7     9
+
+LiquidCrystal lcd(
+		LCD_RS,
+		LCD_ENABLE,
+		LCD_D4,
+		LCD_D5,
+		LCD_D6,
+		LCD_D7
+		);
+
 typedef struct {
 	void *data;
 	size_t siz;
@@ -26,6 +45,8 @@ typedef struct {
 
 void setup()
 {
+	lcd.clear();
+
 	Serial.begin(9600);
 	UCSR0C |= _BV(UPM01) | _BV(UPM00);  // odd parity
 }
