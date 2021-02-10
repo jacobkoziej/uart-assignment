@@ -38,6 +38,7 @@ LiquidCrystal lcd(
 		LCD_D7
 		);
 
+#define LCD_PRINT_DELAY 1000
 char lcd_buf[2][17];
 #endif  /* DEBUG */
 
