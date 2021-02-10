@@ -37,6 +37,8 @@ LiquidCrystal lcd(
 		LCD_D6,
 		LCD_D7
 		);
+
+char lcd_buf[2][17];
 #endif  /* DEBUG */
 
 typedef struct {
