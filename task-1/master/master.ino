@@ -29,6 +29,9 @@
 #define LCD_D6     8
 #define LCD_D7     9
 
+#define LCD_COL 16
+#define LCD_ROW 2
+
 LiquidCrystal lcd(
 		LCD_RS,
 		LCD_ENABLE,
@@ -52,6 +55,7 @@ typedef struct {
 void setup()
 {
 #ifdef DEBUG
+	lcd.begin(LCD_COL, LCD_ROW);
 	lcd.clear();
 #endif
 
