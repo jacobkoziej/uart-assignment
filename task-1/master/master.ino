@@ -88,10 +88,28 @@ void send_packet(uint8_t *tracer, size_t siz, uint32_t sent)
 	uint8_t cnt = 0;
 	uint8_t i = 0;
 
+#ifdef DEBUG
+	uint8_t lcd_pos[2];
+	sprintf(lcd_buf[0], "SEND PACKET: ");
+	lcd_pos[0] = strlen(lcd_buf[0]);
+	lcd_pos[1] = 0;
+	lcd.clear();
+	lcd.print(lcd_buf[0]);
+#endif /* DEBUG */
+
 	while (i < siz && i < 32 && cnt < 8) {
 		if (!(sent & _BV(i))) {
 			Serial.write(tracer[i]);
 			++cnt;
+#ifdef DEBUG
+			sprintf(lcd_buf[1], "%2X", tracer[i]);
+			lcd.print(lcd_buf[1]);
+			lcd.setCursor(lcd_pos[1], 1);
+			lcd.print(lcd_buf[1]);
+			lcd_pos[1] += 2;
+			lcd.setCursor(lcd_pos[0], 0);
+			delay(LCD_PRINT_DELAY);
+#endif /* DEBUG */
 		}
 		++i;
 	}
