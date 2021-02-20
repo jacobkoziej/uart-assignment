@@ -53,6 +53,9 @@ typedef struct {
 	uint32_t sent;
 	uint8_t flags;
 } data_t;
+ 
+#define CHUNK_CONFIRMED _BV(0)
+#define PACKETS_SENT    _BV(1)
 
 
 void setup()
