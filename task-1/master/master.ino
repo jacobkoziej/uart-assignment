@@ -17,6 +17,8 @@
  */
 
 
+#define _BVUL(bit) (1UL << (bit))
+
 #define DEBUG
 
 #ifdef   DEBUG
@@ -109,10 +111,10 @@ void send_packet(data_t *in)
 #endif /* DEBUG */
 
 	while (i < in->siz && i < 32 && cnt < 8) {
-		if (!(in->sent & _BV(i))) {
+		if (!(in->sent & _BVUL(i))) {
 			Serial.write(tracer[i]);
 			++cnt;
-			in->sent |= _BV(i);
+			in->sent |= _BVUL(i);
 #ifdef DEBUG
 			sprintf(lcd_buf[1], "%2X", tracer[i]);
 			lcd.print(lcd_buf[1]);
@@ -134,9 +136,9 @@ uint32_t confirm_packet(uint32_t cur_bytes, uint8_t rec_bytes, size_t siz)
 
 	while (i < siz && i < 32 && cnt < 8) {
 		// check if byte already confirmed
-		if (!(cur_bytes & _BV(i))) {
+		if (!(cur_bytes & _BVUL(i))) {
 			// set bit if byte received successfully
-			cur_bytes |= (rec_bytes & _BV(cnt)) ? _BV(i) : 0;
+			cur_bytes |= (rec_bytes & _BVUL(cnt)) ? _BVUL(i) : 0;
 			++cnt;
 		}
 		++i;
@@ -151,7 +153,7 @@ uint32_t confirm_mask(size_t siz)
 	if (siz == 0) return siz;
 
 	int32_t val, mask;
-	val = mask = _BV(31);
+	val = mask = _BVUL(31);
 
 	// perform a sign extension
 	val >>= 31;
