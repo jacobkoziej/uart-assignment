@@ -49,6 +49,7 @@ typedef struct {
 	void *data;
 	size_t siz;
 	uint32_t sent;
+	uint8_t flags;
 } data_t;
 
 
@@ -85,9 +86,10 @@ int conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 /* populate data_t */
 void init_data_t(data_t *in, void *data, size_t siz)
 {
-	in->data = data;
-	in->siz  = siz;
-	in->sent = 0;
+	in->data  = data;
+	in->siz   = siz;
+	in->sent  = 0;
+	in->flags = 0;
 }
 
 /* send up to an 8-byte packet */
