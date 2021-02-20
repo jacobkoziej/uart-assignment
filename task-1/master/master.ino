@@ -56,6 +56,7 @@ typedef struct {
  
 #define CHUNK_CONFIRMED _BV(0)
 #define PACKETS_SENT    _BV(1)
+#define PARITY_ERROR    _BV(2)
 
 
 void setup()
