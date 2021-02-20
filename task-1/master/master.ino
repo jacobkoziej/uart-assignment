@@ -53,10 +53,14 @@ typedef struct {
 	uint32_t sent;
 	uint8_t flags;
 } data_t;
- 
+
+// send_chunk() flags
 #define CHUNK_CONFIRMED _BV(0)
 #define PACKETS_SENT    _BV(1)
 #define PARITY_ERROR    _BV(2)
+
+// confirm_chunk() flags
+#define NO_PARITY_ERROR _BV(4)
 
 
 void setup()
