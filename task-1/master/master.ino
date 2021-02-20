@@ -93,8 +93,9 @@ void init_data_t(data_t *in, void *data, size_t siz)
 }
 
 /* send up to an 8-byte packet */
-void send_packet(uint8_t *tracer, size_t siz, uint32_t sent)
+void send_packet(data_t *in)
 {
+	uint8_t *tracer = in->data;
 	uint8_t cnt = 0;
 	uint8_t i = 0;
 
@@ -107,8 +108,8 @@ void send_packet(uint8_t *tracer, size_t siz, uint32_t sent)
 	lcd.print(lcd_buf[0]);
 #endif /* DEBUG */
 
-	while (i < siz && i < 32 && cnt < 8) {
-		if (!(sent & _BV(i))) {
+	while (i < in->siz && i < 32 && cnt < 8) {
+		if (!(in->sent & _BV(i))) {
 			Serial.write(tracer[i]);
 			++cnt;
 #ifdef DEBUG
