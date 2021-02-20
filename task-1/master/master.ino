@@ -112,6 +112,7 @@ void send_packet(data_t *in)
 		if (!(in->sent & _BV(i))) {
 			Serial.write(tracer[i]);
 			++cnt;
+			in->sent |= _BV(i);
 #ifdef DEBUG
 			sprintf(lcd_buf[1], "%2X", tracer[i]);
 			lcd.print(lcd_buf[1]);
