@@ -22,6 +22,12 @@
 #include <Arduino.h>
 
 
+// metadata
+#define BEGIN 0xFF
+#define DATA_SIZE 0xFE
+#define PARITY_ERROR 0xFD
+#define SENDING_PACKET 0xFC
+
 // data_t.flags
 #define CHUNK_CONFIRMED _BV(0)
 #define PACKETS_SENT    _BV(1)
