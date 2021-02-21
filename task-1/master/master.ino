@@ -104,6 +104,18 @@ void init_data_t(data_t *in, void *data, size_t siz)
 	in->flags        = 0;
 }
 
+/* send up to a 32-byte chunk of data */
+int send_chunk(data_t *in)
+{
+	in->flags & PACKETS_SENT
+		? confirm_chunk(in)
+		: send_packet(in);
+
+	if (in->sent == in->confirm_mask) in->flags |= PACKETS_SENT;
+
+	return in->flags & CHUNK_CONFIRMED;
+}
+
 /* send up to an 8-byte packet */
 void send_packet(data_t *in)
 {
