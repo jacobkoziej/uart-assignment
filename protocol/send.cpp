@@ -55,14 +55,24 @@ void confirm_chunk(data_t *in)
 	 * byte(s).
 	 */
 
-	// check if the initial control byte is bad
-	if (UCSR0A & _BV(UPE0)) goto error;
+	static uint8_t control_byte;
+	static uint8_t wait_byte_cnt;
 
-	uint8_t control_byte = Serial.read();
-	if (control_byte & NO_PARITY_ERROR) {
-		in->flags |= CHUNK_CONFIRMED;
-		return;
-	}
+	if (!(in->flags & REPLY_WAIT)) {
+		if (!Serial.available()) return;
+
+		// check if the initial control byte is bad
+		if (UCSR0A & _BV(UPE0)) goto error;
+
+		control_byte = Serial.read();
+		if (control_byte & NO_PARITY_ERROR) {
+			in->flags |= CHUNK_CONFIRMED;
+			return;
+		}
+
+		wait_byte_cnt = __builtin_popcount(control_byte);
+		in->flags |= REPLY_WAIT;
+	} else if (Serial.available() < wait_byte_cnt) return;
 
 	/*
 	 * Since the ATmega328P is little endian, tracer index zero corresponds
@@ -71,7 +81,7 @@ void confirm_chunk(data_t *in)
 
 	uint8_t *tracer = (uint8_t*) &in->sent;
 
-	for (uint8_t i = 0; i < 4; i++) {
+	for (uint8_t i = 1; i < 5; i++) {
 		if (control_byte & _BV(i)) {
 			if (UCSR0A & _BV(UPE0)) {
 				goto error;
@@ -82,7 +92,7 @@ void confirm_chunk(data_t *in)
 		}
 	}
 
-	in->flags &= ~PACKETS_SENT;
+	in->flags &= ~(PACKETS_SENT | REPLY_WAIT);
 	return;
 
 error:
