@@ -54,6 +54,9 @@ void confirm_chunk(data_t *in)
 		if (UCSR0A & _BV(UPE0)) goto error;
 
 		control_byte = Serial.read();
+
+		if (control_byte & RESEND_METADATA) goto error;
+
 		if (control_byte & NO_PARITY_ERROR) {
 			in->flags |= CHUNK_CONFIRMED;
 			return;
