@@ -25,7 +25,9 @@
 // data_t.flags
 #define CHUNK_CONFIRMED _BV(0)
 #define PACKETS_SENT    _BV(1)
-#define PARITY_ERROR    _BV(2)
+#define META_SENT       _BV(2)
+#define REPLY_WAIT      _BV(3)
+#define PARITY_ERROR    _BV(4)
 
 // receive flags
 #define NO_PARITY_ERROR _BV(4)
