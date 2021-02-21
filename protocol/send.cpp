@@ -36,7 +36,11 @@ int send_chunk(data_t *in)
 	if (in->flags & CHUNK_CONFIRMED) return 1;
 	if (in->flags & REPLY_WAIT) return 0;
 
-	Serial.write(in->sent & PARITY_ERROR ? RESEND_METADATA : SENDING_CHUNK);
+	if (in->sent & PARITY_ERROR) {
+		Serial.write(RESEND_METADATA);
+		in->flags &= ~PARITY_ERROR;
+	} else Serial.write(SENDING_CHUNK);
+
 	return 0;
 }
 
