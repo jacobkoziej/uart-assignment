@@ -17,6 +17,7 @@
  */
 
 #include "common.h"
+#include "signals.h"
 #include "types.h"
 
 
