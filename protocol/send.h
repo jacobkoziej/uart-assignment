@@ -24,7 +24,7 @@
 #include "types.h"
 
 
-int send_chunk(data_t*);
+uint8_t send_chunk(data_t*);
 void confirm_chunk(data_t*);
 void send_packet(data_t*);
 

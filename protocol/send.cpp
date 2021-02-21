@@ -23,7 +23,7 @@
 
 
 /* send up to a 32-byte chunk of data */
-int send_chunk(data_t *in)
+uint8_t send_chunk(data_t *in)
 {
 	if (!(in->flags & PACKETS_SENT)) {
 		send_packet(in);
