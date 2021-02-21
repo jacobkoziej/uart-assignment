@@ -25,15 +25,19 @@
 /* send up to a 32-byte chunk of data */
 int send_chunk(data_t *in)
 {
-	in->flags & PACKETS_SENT
-		? confirm_chunk(in)
-		: send_packet(in);
+	if (!(in->flags & PACKETS_SENT)) {
+		send_packet(in);
+		if (in->sent == in->confirm_mask) in->flags |= PACKETS_SENT;
+		return 0;
+	}
 
-	if (in->sent == in->confirm_mask) in->flags |= PACKETS_SENT;
+	confirm_chunk(in);
 
-	if (in->sent & PARITY_ERROR) Serial.write(PARITY_ERROR);
+	if (in->flags & CHUNK_CONFIRMED) return 1;
+	if (in->flags & REPLY_WAIT) return 0;
 
-	return in->flags & CHUNK_CONFIRMED;
+	Serial.write(in->sent & PARITY_ERROR ? RESEND_METADATA : SENDING_CHUNK);
+	return 0;
 }
 
 /* check if the sent 32-byte chunk had any parity errors */
