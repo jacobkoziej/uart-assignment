@@ -31,6 +31,8 @@ int send_chunk(data_t *in)
 
 	if (in->sent == in->confirm_mask) in->flags |= PACKETS_SENT;
 
+	if (in->sent & PARITY_ERROR) Serial.write(PARITY_ERROR);
+
 	return in->flags & CHUNK_CONFIRMED;
 }
 
