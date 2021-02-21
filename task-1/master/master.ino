@@ -219,6 +219,7 @@ uint32_t confirm_mask(size_t siz)
 {
 	int32_t val = _BVUL(31);
 
+	// perform a sign extension
 	val >>= 31 - siz;
 
 	return (uint32_t) ~val;
