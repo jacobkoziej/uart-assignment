@@ -81,20 +81,6 @@ void loop()
 }
 
 
-/* NOTE: *start_time must be primed before first run */
-int conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
-{
-	uint32_t cur_time = millis();
-
-	// delay complete
-	if (cur_time - *start_time >= delay_time) {
-		*start_time = cur_time;
-		return 1;
-	}
-
-	return 0;
-}
-
 /* populate data_t */
 void init_data_t(data_t *in, void *data, size_t siz)
 {

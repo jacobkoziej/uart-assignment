@@ -22,4 +22,6 @@
 #include <Arduino.h>
 
 
+uint8_t conditional_delay_ms(uint32_t, uint32_t*);
+
 #endif /* COMMON_H */
