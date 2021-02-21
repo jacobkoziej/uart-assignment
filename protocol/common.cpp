@@ -17,9 +17,19 @@
  */
 
 #include "common.h"
-#include "send.h"
 #include "types.h"
 
+
+/* return a mask with bytes that should be confirmed */
+uint32_t confirm_mask(size_t siz)
+{
+	int32_t val = _BVUL(31);
+
+	// perform a sign extension
+	val >>= 31 - siz;
+
+	return (uint32_t) ~val;
+}
 
 /* NOTE: *start_time must be primed before first run */
 uint8_t conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)

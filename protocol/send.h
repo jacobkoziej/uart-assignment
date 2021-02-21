@@ -25,7 +25,6 @@
 
 
 int send_chunk(data_t*);
-uint32_t confirm_mask(size_t);
 void confirm_chunk(data_t*);
 void send_packet(data_t*);
 

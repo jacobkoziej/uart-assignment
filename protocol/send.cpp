@@ -34,17 +34,6 @@ int send_chunk(data_t *in)
 	return in->flags & CHUNK_CONFIRMED;
 }
 
-/* return a mask with bytes that should be confirmed */
-uint32_t confirm_mask(size_t siz)
-{
-	int32_t val = _BVUL(31);
-
-	// perform a sign extension
-	val >>= 31 - siz;
-
-	return (uint32_t) ~val;
-}
-
 /* check if the sent 32-byte chunk had any parity errors */
 void confirm_chunk(data_t *in)
 {
