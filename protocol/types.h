@@ -22,4 +22,12 @@
 #include <Arduino.h>
 
 
+typedef struct {
+	void *data;
+	size_t siz;
+	uint32_t sent;
+	uint32_t confirm_mask;
+	uint8_t flags;
+} data_t;
+
 #endif /* TYPES_H */

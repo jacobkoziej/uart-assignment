@@ -50,14 +50,6 @@ LiquidCrystal lcd(
 char lcd_buf[2][17];
 #endif  /* DEBUG */
 
-typedef struct {
-	void *data;
-	size_t siz;
-	uint32_t sent;
-	uint32_t confirm_mask;
-	uint8_t flags;
-} data_t;
-
 // send_chunk() flags
 #define CHUNK_CONFIRMED _BV(0)
 #define PACKETS_SENT    _BV(1)
