@@ -98,8 +98,9 @@ void confirm_chunk(data_t *in)
 	return;
 
 error:
-	// remember to flush out data with errors
-	in->flags |= PARITY_ERROR;
+	while (Serial.available()) Serial.read();  // flush receive buffer
+	in->flags &= ~REPLY_WAIT;
+	in->flags |=  PARITY_ERROR;
 }
 
 /* send up to an 8-byte packet */
