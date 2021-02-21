@@ -150,24 +150,6 @@ error:
 	in->flags |= PARITY_ERROR;
 }
 
-uint32_t confirm_packet(uint32_t cur_bytes, uint8_t rec_bytes, size_t siz)
-{
-	uint8_t cnt = 0;
-	uint8_t i   = 0;
-
-	while (i < siz && i < 32 && cnt < 8) {
-		// check if byte already confirmed
-		if (!(cur_bytes & _BVUL(i))) {
-			// set bit if byte received successfully
-			cur_bytes |= (rec_bytes & _BVUL(cnt)) ? _BVUL(i) : 0;
-			++cnt;
-		}
-		++i;
-	}
-
-	return cur_bytes;
-}
-
 /* return a mask with bytes that should be confirmed */
 uint32_t confirm_mask(size_t siz)
 {
