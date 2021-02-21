@@ -70,7 +70,6 @@ void setup()
 	lcd.begin(LCD_COL, LCD_ROW);
 	lcd.clear();
 #endif
-
 	Serial.begin(9600);
 	UCSR0C |= _BV(UPM01) | _BV(UPM00);  // odd parity
 }
