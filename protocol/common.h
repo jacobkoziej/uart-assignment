@@ -21,9 +21,12 @@
 
 #include <Arduino.h>
 
+#include "types.h"
+
 #define _BVUL(bit) (1UL << (bit))
 
 
 uint8_t conditional_delay_ms(uint32_t, uint32_t*);
+void init_data_t(data_t*, void*, size_t);
 
 #endif /* COMMON_H */

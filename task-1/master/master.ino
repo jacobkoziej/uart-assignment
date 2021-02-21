@@ -64,14 +64,3 @@ void setup()
 void loop()
 {
 }
-
-
-/* populate data_t */
-void init_data_t(data_t *in, void *data, size_t siz)
-{
-	in->data         = data;
-	in->siz          = siz;
-	in->sent         = 0;
-	in->confirm_mask = confirm_mask(siz);
-	in->flags        = 0;
-}

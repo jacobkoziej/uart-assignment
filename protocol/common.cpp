@@ -17,6 +17,7 @@
  */
 
 #include "common.h"
+#include "types.h"
 
 
 /* NOTE: *start_time must be primed before first run */
@@ -33,3 +34,12 @@ uint8_t conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 	return 0;
 }
 
+/* populate data_t */
+void init_data_t(data_t *in, void *data, size_t siz)
+{
+	in->data         = data;
+	in->siz          = siz;
+	in->sent         = 0;
+	in->confirm_mask = confirm_mask(siz);
+	in->flags        = 0;
+}
