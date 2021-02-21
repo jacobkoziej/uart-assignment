@@ -137,6 +137,51 @@ void send_packet(data_t *in)
 	}
 }
 
+/* check if the sent 32-byte chunk had any parity errors */
+void confirm_chunk(data_t *in)
+{
+	/*
+	 * In the worst case scenario there will be parity errors in each
+	 * unique packet.  Since the first byte's flags specify which packets
+	 * are "bad", each consecutive byte specifies the packet's "bad"
+	 * byte(s).
+	 */
+
+	// check if the initial control byte is bad
+	if (UCSR0A & _BV(UPE0)) goto error;
+
+	uint8_t control_byte = Serial.read();
+	if (control_byte & NO_PARITY_ERROR) {
+		in->flags |= CHUNK_CONFIRMED;
+		return;
+	}
+
+	/*
+	 * Since the ATmega328P is little endian, tracer index zero corresponds
+	 * with the LSB or the control byte's index.
+	 */
+
+	uint8_t *tracer = (uint8_t*) &in->sent;
+
+	for (uint8_t i = 0; i < 4; i++) {
+		if (control_byte & _BV(i)) {
+			if (UCSR0A & _BV(UPE0)) {
+				goto error;
+			} else {
+				*tracer &= Serial.read();
+				++tracer;
+			}
+		}
+	}
+
+	in->flags &= ~PACKETS_SENT;
+	return;
+
+error:
+	// remember to flush out data with errors
+	in->flags |= PARITY_ERROR;
+}
+
 uint32_t confirm_packet(uint32_t cur_bytes, uint8_t rec_bytes, size_t siz)
 {
 	uint8_t cnt = 0;
