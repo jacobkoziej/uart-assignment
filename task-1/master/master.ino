@@ -49,14 +49,6 @@ LiquidCrystal lcd(
 char lcd_buf[2][17];
 #endif  /* DEBUG */
 
-// send_chunk() flags
-#define CHUNK_CONFIRMED _BV(0)
-#define PACKETS_SENT    _BV(1)
-#define PARITY_ERROR    _BV(2)
-
-// confirm_chunk() flags
-#define NO_PARITY_ERROR _BV(4)
-
 
 void setup()
 {

@@ -22,4 +22,12 @@
 #include <Arduino.h>
 
 
+// data_t.flags
+#define CHUNK_CONFIRMED _BV(0)
+#define PACKETS_SENT    _BV(1)
+#define PARITY_ERROR    _BV(2)
+
+// receive flags
+#define NO_PARITY_ERROR _BV(4)
+
 #endif /* SIGNALS_H */
