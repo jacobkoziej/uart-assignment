@@ -21,6 +21,8 @@
 
 #include <Arduino.h>
 
+#define _BVUL(bit) (1UL << (bit))
+
 
 uint8_t conditional_delay_ms(uint32_t, uint32_t*);
 

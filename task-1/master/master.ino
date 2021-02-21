@@ -20,8 +20,6 @@
 #include "types.h"
 
 
-#define _BVUL(bit) (1UL << (bit))
-
 #define DEBUG
 
 #ifdef   DEBUG
