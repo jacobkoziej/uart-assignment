@@ -17,6 +17,7 @@
  */
 
 #include "common.h"
+#include "types.h"
 
 
 #define _BVUL(bit) (1UL << (bit))
