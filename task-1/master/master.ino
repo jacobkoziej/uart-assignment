@@ -16,6 +16,8 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include "common.h"
+
 
 #define _BVUL(bit) (1UL << (bit))
 
