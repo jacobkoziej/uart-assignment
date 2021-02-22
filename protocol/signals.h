@@ -36,7 +36,7 @@
 #define PARITY_ERROR    _BV(4)
 
 // receive flags
-#define NO_PARITY_ERROR _BV(1)
+#define NO_PARITY_ERROR _BV(0)
 #define RESEND_METADATA _BV(7)
 
 #endif /* SIGNALS_H */
