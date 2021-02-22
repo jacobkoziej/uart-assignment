@@ -34,6 +34,7 @@ uint32_t confirm_mask(size_t siz)
 /* check if the next byte has a parity error */
 uint8_t check_parity()
 {
+	// return 1 on no parity error
 	return UCSR0A & _BV(UPE0) ? 0 : 1;
 }
 
