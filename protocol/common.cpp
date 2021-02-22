@@ -31,6 +31,12 @@ uint32_t confirm_mask(size_t siz)
 	return (uint32_t) ~val;
 }
 
+/* check if the next byte has a parity error */
+uint8_t check_parity()
+{
+	return UCSR0A & _BV(UPE0) ? 0 : 1;
+}
+
 /* NOTE: *start_time must be primed before first run */
 uint8_t conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 {
