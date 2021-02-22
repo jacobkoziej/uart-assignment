@@ -61,7 +61,7 @@ void confirm_chunk(data_t *in)
 		if (!Serial.available()) return;
 
 		// check if the initial control byte is bad
-		if (UCSR0A & _BV(UPE0)) goto error;
+		if (!check_parity()) goto error;
 
 		control_byte = Serial.read();
 
@@ -85,12 +85,10 @@ void confirm_chunk(data_t *in)
 
 	for (uint8_t i = 1; i < 5; i++) {
 		if (control_byte & _BV(i)) {
-			if (UCSR0A & _BV(UPE0)) {
-				goto error;
-			} else {
+			if (check_parity()) {
 				*tracer &= Serial.read();
 				++tracer;
-			}
+			} else goto error;
 		}
 	}
 
