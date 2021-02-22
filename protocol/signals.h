@@ -39,8 +39,9 @@
 #define NO_PARITY_ERROR _BV(0)
 #define RESEND_METADATA _BV(7)
 
-// handshake flags
-#define MASTER _BV(0)
-#define SLAVE  _BV(1)
+// global communication flags
+#define MASTER    _BV(0)
+#define SLAVE     _BV(1)
+#define CONNECTED _BV(7)
 
 #endif /* SIGNALS_H */
