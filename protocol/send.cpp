@@ -36,9 +36,9 @@ uint8_t send_chunk(data_t *in)
 	if (in->flags & CHUNK_CONFIRMED) return 1;
 	if (in->flags & REPLY_WAIT) return 0;
 
-	if (in->sent & PARITY_ERROR) {
+	if (in->sent & D_PARITY_ERROR) {
 		Serial.write(RESEND_METADATA);
-		in->flags &= ~PARITY_ERROR;
+		in->flags &= ~D_PARITY_ERROR;
 	} else Serial.write(SENDING_CHUNK);
 
 	return 0;
@@ -98,7 +98,7 @@ void confirm_chunk(data_t *in)
 error:
 	while (Serial.available()) Serial.read();  // flush receive buffer
 	in->flags &= ~REPLY_WAIT;
-	in->flags |=  PARITY_ERROR;
+	in->flags |=  D_PARITY_ERROR;
 }
 
 /* send up to an 8-byte packet */

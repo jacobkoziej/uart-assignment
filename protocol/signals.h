@@ -34,7 +34,7 @@
 #define PACKETS_SENT    _BV(1)
 #define META_SENT       _BV(2)
 #define REPLY_WAIT      _BV(3)
-#define PARITY_ERROR    _BV(4)
+#define D_PARITY_ERROR  _BV(4)
 
 // receive flags
 #define NO_PARITY_ERROR _BV(0)
