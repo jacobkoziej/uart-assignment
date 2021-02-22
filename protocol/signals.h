@@ -42,6 +42,7 @@
 // global communication flags
 #define MASTER    _BV(0)
 #define SLAVE     _BV(1)
+#define WAITING   _BV(6)
 #define CONNECTED _BV(7)
 
 #endif /* SIGNALS_H */
