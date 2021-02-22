@@ -96,7 +96,7 @@ void confirm_chunk(data_t *in)
 	return;
 
 error:
-	while (Serial.available()) Serial.read();  // flush receive buffer
+	flush_serial_buffer();
 	in->flags &= ~REPLY_WAIT;
 	in->flags |=  D_PARITY_ERROR;
 }
