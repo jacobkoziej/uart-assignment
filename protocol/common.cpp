@@ -52,6 +52,12 @@ uint8_t conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 	return 0;
 }
 
+/* flush all data in the serial buffer */
+void flush_serial_buffer()
+{
+	while (Serial.available()) Serial.read();
+}
+
 /* populate data_t */
 void init_data_t(data_t *in, void *data, size_t siz)
 {
