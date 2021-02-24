@@ -28,6 +28,7 @@
 #define PARITY_ERROR 0xFD
 #define SENDING_CHUNK 0xFC
 #define GOOD_CONNECTION 0xFB
+#define UNKOWN_MESSAGE 0xFA
 
 // data_t.flags
 #define CHUNK_CONFIRMED _BV(0)
