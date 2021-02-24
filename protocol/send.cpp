@@ -22,6 +22,55 @@
 #include "types.h"
 
 
+/* pickup a connection request from slave device */
+uint8_t pickup_connection(uint8_t *com_flags)
+{
+	// why are you trying to reconnect??
+	if (*com_flags & CONNECTED) return 1;
+
+	// don't bother if there's nothing
+	if (!Serial.available()) return 0;
+
+	// request data again on error
+	if (!check_parity()) {
+		flush_serial_buffer();
+		Serial.write(PARITY_ERROR);
+		return 0;
+	}
+
+	uint8_t byte_in = Serial.read();
+
+	if (*com_flags & WAITING) {
+		switch (byte_in) {
+			case GOOD_CONNECTION:
+				*com_flags &= ~WAITING;
+				*com_flags |= CONNECTED;
+				return 1;
+
+			// slave device didn't get our last message
+			case BEGIN:
+			case PARITY_ERROR:
+				Serial.write(GOOD_CONNECTION);
+				break;
+
+			default:
+				Serial.write(UNKOWN_MESSAGE);
+				break;
+		}
+
+		return 0;
+	}
+
+	flush_serial_buffer();  // remove any backlogged messages
+
+	if (byte_in == BEGIN) {
+		*com_flags |= WAITING;
+		Serial.write(GOOD_CONNECTION);
+	} else Serial.write(UNKOWN_MESSAGE);
+
+	return 0;
+}
+
 /* send up to a 32-byte chunk of data */
 uint8_t send_chunk(data_t *in)
 {
