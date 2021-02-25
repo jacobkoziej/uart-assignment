@@ -29,7 +29,7 @@
 uint32_t confirm_mask(size_t);
 uint8_t check_parity();
 uint8_t conditional_delay_ms(uint32_t, uint32_t*);
-void init_data_t(data_t*, void*, size_t);
 void flush_serial_buffer();
+void init_data_t(data_t*, void*, size_t);
 
 #endif /* COMMON_H */
