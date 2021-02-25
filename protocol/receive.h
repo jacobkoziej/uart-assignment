@@ -22,4 +22,6 @@
 #include <Arduino.h>
 
 
+uint8_t begin_connection(uint8_t*, uint32_t, uint32_t*);
+
 #endif /* RECEIVE_H */
