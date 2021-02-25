@@ -44,6 +44,7 @@
 // global communication flags
 #define MASTER    _BV(0)
 #define SLAVE     _BV(1)
+#define LOCK      _BV(5)
 #define WAITING   _BV(6)
 #define CONNECTED _BV(7)
 
