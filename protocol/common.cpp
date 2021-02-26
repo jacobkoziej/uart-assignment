@@ -17,6 +17,7 @@
  */
 
 #include "common.h"
+#include "signals.h"
 #include "types.h"
 
 
@@ -50,6 +51,22 @@ uint8_t conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 	}
 
 	return 0;
+}
+
+/* handle a serial error */
+uint8_t serial_error_handler()
+{
+	// don't bother if there's nothing
+	if (!Serial.available()) return 1;
+
+	// request data again on error
+	if (!check_parity()) {
+		flush_serial_buffer();
+		Serial.write(PARITY_ERROR);
+		return 0;
+	}
+
+	return 1;
 }
 
 /* flush all data in the serial buffer */
