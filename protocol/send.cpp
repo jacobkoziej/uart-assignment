@@ -93,9 +93,9 @@ uint8_t send_metadata(data_t *in, uint8_t *com_flags)
 	if (!(*com_flags & CONNECTED)) return 0;
 
 	if (*com_flags & WAITING) {
-		*com_flags &= ~WAITING;
-
 		if (!serial_error_handler()) return 0;
+
+		*com_flags &= ~WAITING;
 
 		uint8_t byte_in = Serial.read();
 
@@ -105,7 +105,7 @@ uint8_t send_metadata(data_t *in, uint8_t *com_flags)
 	uint8_t *tracer;
 
 	Serial.write(DATA_SIZE);
-	*tracer = (uint8_t*) & in->siz;
+	tracer = (uint8_t*) &in->siz;
 	Serial.write(tracer[0]);
 	Serial.write(tracer[1]);
 
