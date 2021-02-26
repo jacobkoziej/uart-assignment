@@ -26,6 +26,7 @@
 
 uint8_t pickup_connection(uint8_t*);
 uint8_t send_chunk(data_t*);
+uint8_t send_metadata(data_t*, uint8_t*);
 void confirm_chunk(data_t*);
 void send_packet(data_t*);
 

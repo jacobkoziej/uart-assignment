@@ -86,6 +86,33 @@ uint8_t send_chunk(data_t *in)
 	return 0;
 }
 
+/* send metadata about the data that's about to be sent */
+uint8_t send_metadata(data_t *in, uint8_t *com_flags)
+{
+	// can't be sending metadata if you're not connected
+	if (!(*com_flags & CONNECTED)) return 0;
+
+	if (*com_flags & WAITING) {
+		*com_flags &= ~WAITING;
+
+		if (!serial_error_handler()) return 0;
+
+		uint8_t byte_in = Serial.read();
+
+		return (byte_in == ACKNOWLEDGED) ? 1 : 0;
+	}
+
+	uint8_t *tracer;
+
+	Serial.write(DATA_SIZE);
+	*tracer = (uint8_t*) & in->siz;
+	Serial.write(tracer[0]);
+	Serial.write(tracer[1]);
+
+	*com_flags |= WAITING;
+	return 0;
+}
+
 /* check if the sent 32-byte chunk had any parity errors */
 void confirm_chunk(data_t *in)
 {
