@@ -29,6 +29,7 @@
 #define SENDING_CHUNK 0xFC
 #define GOOD_CONNECTION 0xFB
 #define UNKOWN_MESSAGE 0xFA
+#define ACKNOWLEDGED 0xF0
 
 // data_t.flags
 #define CHUNK_CONFIRMED _BV(0)
