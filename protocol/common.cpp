@@ -57,7 +57,7 @@ uint8_t conditional_delay_ms(uint32_t delay_time, uint32_t *start_time)
 uint8_t serial_error_handler()
 {
 	// don't bother if there's nothing
-	if (!Serial.available()) return 1;
+	if (!Serial.available()) return 0;
 
 	// request data again on error
 	if (!check_parity()) {
