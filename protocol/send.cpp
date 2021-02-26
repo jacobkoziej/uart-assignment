@@ -29,14 +29,7 @@ uint8_t pickup_connection(uint8_t *com_flags)
 	if (*com_flags & CONNECTED) return 1;
 
 	// don't bother if there's nothing
-	if (!Serial.available()) return 0;
-
-	// request data again on error
-	if (!check_parity()) {
-		flush_serial_buffer();
-		Serial.write(PARITY_ERROR);
-		return 0;
-	}
+	if (!serial_error_handler()) return 0;
 
 	uint8_t byte_in = Serial.read();
 
