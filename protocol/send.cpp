@@ -123,8 +123,8 @@ void confirm_chunk(data_t *in)
 	 * byte(s).
 	 */
 
-	static uint8_t control_byte;
-	static uint8_t wait_byte_cnt;
+	static uint8_t control_byte  = 0;
+	static uint8_t wait_byte_cnt = 0;
 
 	if (!(in->flags & REPLY_WAIT)) {
 		if (!Serial.available()) return;
@@ -143,6 +143,7 @@ void confirm_chunk(data_t *in)
 
 		wait_byte_cnt = __builtin_popcount(control_byte);
 		in->flags |= REPLY_WAIT;
+		return;
 	} else if (Serial.available() < wait_byte_cnt) return;
 
 	/*
@@ -155,8 +156,7 @@ void confirm_chunk(data_t *in)
 	for (uint8_t i = 1; i < 5; i++) {
 		if (control_byte & _BV(i)) {
 			if (check_parity()) {
-				*tracer &= Serial.read();
-				++tracer;
+				tracer[i - 1] &= Serial.read();
 			} else goto error;
 		}
 	}
