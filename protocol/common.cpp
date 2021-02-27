@@ -24,6 +24,10 @@
 /* return a mask with bytes that should be confirmed */
 uint32_t confirm_mask(size_t siz)
 {
+	// special cases
+	if (siz == 0) return 0;
+	if (!(siz % 32)) return ~0UL;
+
 	int32_t val = _BVUL(31);
 
 	// perform a sign extension
