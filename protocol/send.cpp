@@ -152,14 +152,21 @@ void confirm_chunk(data_t *in)
 	 */
 
 	uint8_t *tracer = (uint8_t*) &in->sent;
+	uint8_t buffer[wait_byte_cnt];
 
-	for (uint8_t i = 1; i < 5; i++) {
-		if (control_byte & _BV(i)) {
-			if (check_parity()) {
-				tracer[i - 1] &= Serial.read();
-			} else goto error;
-		}
+	// load metadata into a buffer to prevent corruption
+	for (uint8_t i = 0; i < wait_byte_cnt; i++) {
+		if (check_parity()) {
+			buffer[i] = Serial.read();
+		} else goto error;
 	}
+
+	// write buffer to data_t.sent
+	for (uint8_t i = 1, j = 0; i < 5; i++)
+		if (control_byte & _BV(i)) {
+			tracer[i - 1] &= buffer[j];
+			++j;
+		}
 
 	in->flags &= ~(PACKETS_SENT | REPLY_WAIT);
 	return;
