@@ -76,10 +76,10 @@ uint8_t send_chunk(data_t *in)
 	confirm_chunk(in);
 
 	if (in->flags & CHUNK_CONFIRMED) return 1;
-	if (in->flags & REPLY_WAIT) return 0;
+	if (in->flags & PACKETS_SENT) return 0;
 
 	if (in->sent & D_PARITY_ERROR) {
-		Serial.write(RESEND_METADATA);
+		Serial.write(PARITY_ERROR);
 		in->flags &= ~D_PARITY_ERROR;
 	} else Serial.write(SENDING_CHUNK);
 
