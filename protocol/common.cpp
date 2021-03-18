@@ -21,6 +21,19 @@
 #include "types.h"
 
 
+/* check if the next byte has a parity error */
+inline uint8_t check_parity()
+{
+	// return 1 on no parity error
+	return UCSR0A & _BV(UPE0) ? 0 : 1;
+}
+
+/* flush all data in the serial buffer */
+inline void flush_serial_buffer()
+{
+	while (Serial.available()) Serial.read();
+}
+
 /* return a mask with bytes that should be confirmed */
 uint32_t confirm_mask(size_t siz)
 {
@@ -34,13 +47,6 @@ uint32_t confirm_mask(size_t siz)
 	val >>= 31 - siz;
 
 	return (uint32_t) ~val;
-}
-
-/* check if the next byte has a parity error */
-uint8_t check_parity()
-{
-	// return 1 on no parity error
-	return UCSR0A & _BV(UPE0) ? 0 : 1;
 }
 
 /* NOTE: *start_time must be primed before first run */
@@ -71,12 +77,6 @@ uint8_t serial_error_handler()
 	}
 
 	return 1;
-}
-
-/* flush all data in the serial buffer */
-void flush_serial_buffer()
-{
-	while (Serial.available()) Serial.read();
 }
 
 /* populate data_t */
